@@ -34,4 +34,4 @@ Cada lenguaje de programación es una región con sus propios desafíos y peligr
 3. Inicia el reino con `npm run dev`.
 
 ---
-*Desarrollado con honor por Antigravity AI.*
+*¡Gloria a la Orden de los Programadores!*
