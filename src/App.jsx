@@ -234,83 +234,51 @@ function App() {
             <div className="flex flex-col gap-8">
               <div className="medieval-scroll p-12 flex-1 flex flex-col justify-between shadow-[0_15px_35px_rgba(0,0,0,0.6)]">
                 {/* Cabecera del Pergamino */}
-                <div className="border-b-4 border-castle-wood/10 pb-4 mb-4">
+                <div className="border-b-4 border-castle-wood/10 pb-4 mb-6">
                   <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-2">📜 Manuscrito de Sabiduría</h4>
                   <h2 className="text-4xl font-medieval text-castle-wood uppercase font-black italic tracking-tighter leading-none">{activeQuest.title}</h2>
                   <p className="text-stone-500 text-xs italic mt-2">Crónicas: "{activeQuest.description}"</p>
                 </div>
 
-                {/* 🛡️ Selector de Opciones del Manuscrito */}
-                <div className="flex gap-2 mb-6 border-b border-castle-wood/10 pb-4">
-                  <button 
-                    onClick={() => setActiveTab('concept')}
-                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
-                      activeTab === 'concept' 
-                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
-                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
-                    }`}
-                  >
-                    📜 Concepto
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('example')}
-                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
-                      activeTab === 'example' 
-                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
-                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
-                    }`}
-                  >
-                    🔮 Ejemplo
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('guide')}
-                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
-                      activeTab === 'guide' 
-                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
-                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
-                    }`}
-                  >
-                    🕯️ Guía
-                  </button>
-                </div>
-
-                {/* Explicación de la lección según pestaña activa */}
-                <div className="flex-1 overflow-y-auto mb-8 pr-2 max-h-[360px] scrollbar-thin scrollbar-thumb-castle-wood">
-                  {activeTab === 'concept' && (
-                    <div className="animate-in fade-in duration-300">
-                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">El Concepto del Reino</h4>
-                      <p className="text-castle-wood font-serif text-lg leading-relaxed mb-6 font-medium">
+                {/* Explicación continua de la lección */}
+                <div className="flex-1 overflow-y-auto mb-6 pr-2 max-h-[460px] scrollbar-thin scrollbar-thumb-castle-wood">
+                  <div className="space-y-8">
+                    {/* Sección 1: El Concepto */}
+                    <div>
+                      <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">El Concepto del Reino</h4>
+                      <p className="text-castle-wood font-serif text-lg leading-relaxed font-medium">
                         {lesson?.concept}
                       </p>
                     </div>
-                  )}
 
-                  {activeTab === 'example' && (
-                    <div className="animate-in fade-in duration-300">
-                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">El Código del Maestro</h4>
-                      <div className="bg-stone-900 rounded-sm border-2 border-castle-wood/30 p-6 font-mono text-sm text-castle-gold/90 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] overflow-x-auto mb-6">
+                    {/* Sección 2: El Ejemplo del Maestro */}
+                    <div className="pt-6 border-t border-castle-wood/10">
+                      <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">El Ejemplo del Maestro</h4>
+                      <div className="bg-stone-900 rounded-sm border-2 border-castle-wood/30 p-6 font-mono text-sm text-castle-gold/90 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] overflow-x-auto mb-4">
                         <pre className="whitespace-pre">{lesson?.example}</pre>
                       </div>
-                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-3">Explicación del Conjuro</h4>
-                      <p className="text-castle-wood font-serif text-base leading-relaxed font-medium whitespace-pre-line">
-                        {lesson?.exampleExplain}
-                      </p>
+                      {lesson?.exampleExplain && (
+                        <p className="text-castle-wood/80 font-serif text-sm leading-relaxed font-medium whitespace-pre-line italic">
+                          {lesson?.exampleExplain}
+                        </p>
+                      )}
                     </div>
-                  )}
 
-                  {activeTab === 'guide' && (
-                    <div className="animate-in fade-in duration-300">
-                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">La Receta del Oráculo</h4>
-                      <p className="text-castle-wood font-serif text-base leading-relaxed mb-6 font-medium whitespace-pre-line bg-[#3e2723]/5 p-6 border-l-4 border-castle-wood rounded-r-sm">
-                        {lesson?.guide}
-                      </p>
-                    </div>
-                  )}
+                    {/* Sección 3: La Guía del Oráculo */}
+                    {lesson?.guide && (
+                      <div className="pt-6 border-t border-castle-wood/10">
+                        <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">La Guía del Oráculo</h4>
+                        <p className="text-castle-wood/90 font-serif text-sm leading-relaxed font-medium whitespace-pre-line bg-[#3e2723]/5 p-5 border-l-4 border-castle-wood rounded-r-sm">
+                          {lesson?.guide}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Pie de lección */}
                 <div className="bg-[#3e2723]/5 p-4 border border-castle-wood/10 rounded-sm italic text-[11px] text-castle-wood/70 text-center font-serif">
-                  "Navega entre el Concepto, el Ejemplo del Maestro y la Guía para forjar tu victoria en la arena derecha."
+                  "Lee el manuscrito en su totalidad para comprender el concepto y forjar la solución en la arena derecha."
                 </div>
               </div>
             </div>
