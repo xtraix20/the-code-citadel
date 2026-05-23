@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { paths } from './data/quests';
 import QuestCard from './components/QuestCard';
 import { validateSolution } from './engines/ValidationEngine';
+import { getLessonForQuest } from './data/learningContent';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -22,6 +23,9 @@ function App() {
   const [feedback, setFeedback] = useState(null);
   const [showHint, setShowHint] = useState(false);
   const [hintIndex, setHintIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("concept"); // "concept", "example", "guide"
+
+  const lesson = activeQuest ? getLessonForQuest(activeQuest) : null;
 
   useEffect(() => {
     localStorage.setItem('citadel_user', JSON.stringify(user));
@@ -41,6 +45,7 @@ function App() {
     setFeedback(null);
     setShowHint(false);
     setHintIndex(0);
+    setActiveTab("concept");
   };
 
   const handleValidate = () => {
@@ -224,90 +229,192 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="animate-in zoom-in-95 duration-500 grid grid-cols-1 lg:grid-cols-3 gap-12 min-h-[calc(100vh-300px)]">
-            {/* Quest View (The Forge) */}
-            <div className="lg:col-span-2 flex flex-col gap-8">
-              <div className="medieval-scroll p-16 flex-1 flex flex-col">
-                {feedback?.success && (
-                  <div className="absolute inset-0 bg-white/60 backdrop-blur-md z-10 flex flex-col items-center justify-center">
-                    <div className="h-32 w-32 bg-castle-gold rounded-full flex items-center justify-center text-castle-wood text-6xl mb-8 shadow-2xl border-8 border-castle-wood animate-float">⚔️</div>
-                    <h3 className="text-5xl font-medieval text-castle-wood uppercase font-black tracking-widest mb-4">¡Victoria Real!</h3>
-                    <p className="text-castle-crimson font-medieval text-2xl font-bold">+{activeQuest.xp} Honor Ganado</p>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-start mb-12 border-b-4 border-castle-wood/10 pb-6">
-                  <div>
-                    <h4 className="text-[10px] font-mono text-castle-wood/50 uppercase tracking-widest mb-2">Misión Activa</h4>
-                    <h2 className="text-4xl font-medieval text-castle-wood uppercase font-black italic tracking-tighter leading-none">{activeQuest.title}</h2>
-                  </div>
-                  <button onClick={() => setActiveQuest(null)} className="text-[10px] font-medieval text-castle-crimson border-2 border-castle-crimson px-4 py-2 hover:bg-castle-crimson hover:text-white transition-all uppercase">[ VOLVER AL MAPA ]</button>
-                </div>
-                
-                <div className="mb-12 bg-black/5 p-8 border-2 border-dashed border-castle-wood/20 rounded-lg">
-                  <h4 className="text-[10px] font-mono text-stone-500 mb-4 uppercase tracking-[0.4em]">El Mandato</h4>
-                  <div className="text-castle-wood font-serif italic text-2xl leading-relaxed text-center">"{activeQuest.goal}"</div>
+          <div className="animate-in zoom-in-95 duration-500 grid grid-cols-1 lg:grid-cols-2 gap-10 min-h-[calc(100vh-300px)]">
+            {/* PANEL IZQUIERDO: El Manuscrito de Sabiduría (Aprender al estilo Codédex) */}
+            <div className="flex flex-col gap-8">
+              <div className="medieval-scroll p-12 flex-1 flex flex-col justify-between shadow-[0_15px_35px_rgba(0,0,0,0.6)]">
+                {/* Cabecera del Pergamino */}
+                <div className="border-b-4 border-castle-wood/10 pb-4 mb-4">
+                  <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-2">📜 Manuscrito de Sabiduría</h4>
+                  <h2 className="text-4xl font-medieval text-castle-wood uppercase font-black italic tracking-tighter leading-none">{activeQuest.title}</h2>
+                  <p className="text-stone-500 text-xs italic mt-2">Crónicas: "{activeQuest.description}"</p>
                 </div>
 
-                <div className="flex-1 flex flex-col min-h-[300px]">
-                  <h4 className="text-[10px] font-mono text-stone-500 mb-4 uppercase tracking-[0.4em]">El Enigma</h4>
-                  <div className="flex-1 bg-stone-900 rounded-sm border-4 border-castle-wood/40 p-10 font-mono text-lg overflow-auto text-castle-gold/90 shadow-[inset_0_0_30px_rgba(0,0,0,0.8)]">
-                    <pre className="whitespace-pre-wrap">{activeQuest.problem}</pre>
-                  </div>
+                {/* 🛡️ Selector de Opciones del Manuscrito */}
+                <div className="flex gap-2 mb-6 border-b border-castle-wood/10 pb-4">
+                  <button 
+                    onClick={() => setActiveTab('concept')}
+                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
+                      activeTab === 'concept' 
+                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
+                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
+                    }`}
+                  >
+                    📜 Concepto
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('example')}
+                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
+                      activeTab === 'example' 
+                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
+                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
+                    }`}
+                  >
+                    🔮 Ejemplo
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('guide')}
+                    className={`flex-1 py-3 text-xs font-medieval tracking-widest uppercase transition-all border border-castle-wood/20 cursor-pointer ${
+                      activeTab === 'guide' 
+                      ? 'bg-castle-wood text-castle-gold shadow-md font-bold' 
+                      : 'bg-castle-wood/5 text-castle-wood/65 hover:bg-castle-wood/10'
+                    }`}
+                  >
+                    🕯️ Guía
+                  </button>
                 </div>
 
-                <div className="mt-12 flex flex-col gap-6">
-                  <div className="flex gap-6">
-                    <input 
-                      type="text" 
-                      value={userInput}
-                      onChange={(e) => setUserInput(e.target.value)}
-                      placeholder="Escribe tu solución..." 
-                      className="flex-1 bg-white/70 border-4 border-castle-wood/30 px-8 py-5 text-2xl font-serif text-castle-wood focus:outline-none focus:border-castle-gold transition-all"
-                    />
-                    <button 
-                      onClick={handleValidate}
-                      className="px-16 py-5 bg-castle-wood text-castle-gold font-medieval uppercase text-xl tracking-widest hover:bg-black transition-all shadow-xl border-b-8 border-castle-gold"
-                    >
-                      Verificar
-                    </button>
-                  </div>
-                  {feedback && !feedback.success && (
-                    <div className="text-lg font-serif text-castle-crimson bg-castle-crimson/5 p-6 border-4 border-double border-castle-crimson/20 italic text-center animate-shake">
-                       "El Oráculo: {feedback.message}"
+                {/* Explicación de la lección según pestaña activa */}
+                <div className="flex-1 overflow-y-auto mb-8 pr-2 max-h-[360px] scrollbar-thin scrollbar-thumb-castle-wood">
+                  {activeTab === 'concept' && (
+                    <div className="animate-in fade-in duration-300">
+                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">El Concepto del Reino</h4>
+                      <p className="text-castle-wood font-serif text-lg leading-relaxed mb-6 font-medium">
+                        {lesson?.concept}
+                      </p>
                     </div>
                   )}
+
+                  {activeTab === 'example' && (
+                    <div className="animate-in fade-in duration-300">
+                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">El Código del Maestro</h4>
+                      <div className="bg-stone-900 rounded-sm border-2 border-castle-wood/30 p-6 font-mono text-sm text-castle-gold/90 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] overflow-x-auto mb-6">
+                        <pre className="whitespace-pre">{lesson?.example}</pre>
+                      </div>
+                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-3">Explicación del Conjuro</h4>
+                      <p className="text-castle-wood font-serif text-base leading-relaxed font-medium whitespace-pre-line">
+                        {lesson?.exampleExplain}
+                      </p>
+                    </div>
+                  )}
+
+                  {activeTab === 'guide' && (
+                    <div className="animate-in fade-in duration-300">
+                      <h4 className="text-[10px] font-mono text-castle-wood/70 uppercase tracking-[0.3em] mb-4">La Receta del Oráculo</h4>
+                      <p className="text-castle-wood font-serif text-base leading-relaxed mb-6 font-medium whitespace-pre-line bg-[#3e2723]/5 p-6 border-l-4 border-castle-wood rounded-r-sm">
+                        {lesson?.guide}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Pie de lección */}
+                <div className="bg-[#3e2723]/5 p-4 border border-castle-wood/10 rounded-sm italic text-[11px] text-castle-wood/70 text-center font-serif">
+                  "Navega entre el Concepto, el Ejemplo del Maestro y la Guía para forjar tu victoria en la arena derecha."
                 </div>
               </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="flex flex-col gap-10">
-              <div className="stone-card p-10 border-l-[12px] border-l-castle-gold">
-                <h4 className="text-[10px] font-mono text-castle-gold mb-6 uppercase tracking-[0.3em]">Crónicas</h4>
-                <p className="text-xl text-stone-400 italic">"{activeQuest.description}"</p>
-              </div>
-
-              <div className="stone-card p-10 flex-1 flex flex-col">
-                <h4 className="text-[10px] font-mono text-stone-500 uppercase tracking-[0.3em] mb-10 border-b-2 border-stone-800 pb-6">Sabiduría</h4>
-                <div className="space-y-8 flex-1">
-                  {showHint && activeQuest.hints.slice(0, hintIndex + 1).map((hint, i) => (
-                    <div key={i} className="text-lg text-stone-300 p-6 bg-[#3e2723]/30 border-2 border-castle-wood/50 italic animate-in slide-in-from-right-8">
-                      {hint}
-                    </div>
-                  ))}
-                  {!showHint && (
-                    <button 
-                      onClick={() => setShowHint(true)}
-                      className="w-full text-xs font-medieval text-castle-gold border-4 border-castle-gold px-8 py-4 hover:bg-castle-gold hover:text-black transition-all uppercase"
-                    >
-                      [ DESBLOQUEAR PISTA ]
-                    </button>
-                  )}
-                </div>
-                {showHint && hintIndex < activeQuest.hints.length - 1 && (
-                  <button onClick={() => setHintIndex(prev => prev + 1)} className="mt-10 w-full py-5 border-4 border-stone-800 hover:border-castle-gold text-xs font-mono uppercase">Próxima Pista</button>
+            {/* PANEL DERECHO: El Yunque del Destino (La Forja / Práctica con ejercicio diferente) */}
+            <div className="flex flex-col gap-8">
+              <div className="stone-card p-12 flex-1 flex flex-col justify-between border-t-4 border-t-castle-gold relative overflow-hidden">
+                {feedback?.success && (
+                  <div className="absolute inset-0 bg-stone-950/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
+                    <div className="h-28 w-28 bg-castle-gold rounded-full flex items-center justify-center text-castle-wood text-5xl mb-6 shadow-2xl border-4 border-castle-wood animate-float">⚔️</div>
+                    <h3 className="text-4xl font-medieval text-castle-gold uppercase font-black tracking-widest mb-2 gold-glow">¡Victoria Real!</h3>
+                    <p className="text-white font-serif italic text-lg mb-4">Has completado el reto con honor.</p>
+                    <p className="text-castle-gold font-medieval text-xl font-bold tracking-widest animate-pulse">+{activeQuest.xp} Honor Ganado</p>
+                  </div>
                 )}
+
+                <div>
+                  {/* Botones superiores de Control */}
+                  <div className="flex justify-between items-center mb-8 border-b border-stone-800 pb-4">
+                    <div className="flex items-center gap-2">
+                      <div className={`h-3 w-3 rotate-45 ${activeQuest.difficulty === 'Junior' ? 'bg-green-700' : 'bg-castle-crimson'}`}></div>
+                      <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest">Forja Real | Dificultad: {activeQuest.difficulty}</span>
+                    </div>
+                    <button 
+                      onClick={() => setActiveQuest(null)} 
+                      className="text-[10px] font-medieval text-castle-gold border border-castle-gold/50 px-4 py-2 hover:bg-castle-gold hover:text-black transition-all uppercase tracking-widest font-black"
+                    >
+                      [ VOLVER AL MAPA ]
+                    </button>
+                  </div>
+
+                  {/* El Mandato del Oráculo */}
+                  <div className="mb-6 bg-black/40 p-6 border-l-4 border-castle-gold rounded-r-md">
+                    <h4 className="text-[9px] font-mono text-castle-gold/60 uppercase tracking-[0.3em] mb-2">El Reto del Oráculo (Diferente al ejemplo)</h4>
+                    <div className="text-stone-300 font-serif italic text-lg leading-normal font-medium">"{lesson?.exerciseExplain}"</div>
+                  </div>
+
+                  {/* El Enigma / Editor de Código */}
+                  <div className="flex flex-col min-h-[220px]">
+                    <h4 className="text-[9px] font-mono text-stone-500 mb-2 uppercase tracking-[0.3em]">El Enigma</h4>
+                    <div className="flex-1 bg-black rounded-sm border-2 border-stone-800 p-6 font-mono text-base overflow-auto text-emerald-405/95 shadow-[inset_0_0_20px_rgba(0,0,0,0.9)]">
+                      <pre className="whitespace-pre-wrap">{activeQuest.problem}</pre>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Entrada y Verificación */}
+                <div className="mt-8 flex flex-col gap-4">
+                  <div className="flex gap-4">
+                    <input 
+                      type="text" 
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      placeholder="Escribe tu solución aquí..." 
+                      className="flex-1 bg-stone-900 border border-stone-700 focus:border-castle-gold text-stone-100 px-6 py-4 text-lg font-mono focus:outline-none transition-all placeholder:text-stone-600 rounded-sm"
+                    />
+                    <button 
+                      onClick={handleValidate}
+                      className="px-10 py-4 bg-castle-gold hover:bg-yellow-600 text-black font-medieval uppercase text-base tracking-widest font-black transition-all shadow-xl active:scale-95 border-b-4 border-yellow-700"
+                    >
+                      Verificar
+                    </button>
+                  </div>
+                  
+                  {feedback && !feedback.success && (
+                    <div className="text-sm font-serif text-castle-crimson bg-castle-crimson/5 p-4 border border-castle-crimson/30 italic text-center animate-shake rounded-sm">
+                       "El Oráculo: {feedback.message}"
+                    </div>
+                  )}
+
+                  {/* Sección de Pistas de Sabiduría */}
+                  <div className="mt-4 border-t border-stone-800 pt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[9px] font-mono text-stone-500 uppercase tracking-widest">¿Atascado en la forja?</span>
+                      {!showHint ? (
+                        <button 
+                          onClick={() => setShowHint(true)}
+                          className="text-[9px] font-medieval text-castle-gold hover:underline uppercase tracking-widest"
+                        >
+                          [ PEDIR PISTA AL ORÁCULO ]
+                        </button>
+                      ) : (
+                        <span className="text-[9px] font-mono text-castle-gold uppercase tracking-widest">Sabiduría revelada</span>
+                      )}
+                    </div>
+                    {showHint && (
+                      <div className="mt-3 space-y-2">
+                        {activeQuest.hints.slice(0, hintIndex + 1).map((hint, i) => (
+                          <div key={i} className="text-xs text-castle-gold p-3 bg-stone-900/60 border border-castle-gold/20 italic rounded-sm animate-in slide-in-from-right-4">
+                            💎 Pista: {hint}
+                          </div>
+                        ))}
+                        {hintIndex < activeQuest.hints.length - 1 && (
+                          <button 
+                            onClick={() => setHintIndex(prev => prev + 1)} 
+                            className="mt-2 text-[9px] font-mono text-stone-400 hover:text-white uppercase tracking-wider underline block"
+                          >
+                            Pedir siguiente pista
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

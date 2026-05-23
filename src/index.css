@@ -119,3 +119,18 @@ body {
     @apply font-cinzel tracking-wider text-castle-gold uppercase;
   }
 }
+
+/* Custom thin scrollbar for learning scrolls */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(62, 39, 35, 0.05);
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #3e2723;
+  border-radius: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--color-castle-gold);
+}
