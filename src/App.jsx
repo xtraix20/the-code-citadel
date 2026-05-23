@@ -122,7 +122,7 @@ function App() {
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-[#1a1311] border-b-4 border-castle-gold px-8 py-4 flex justify-between items-center shadow-[0_5px_30px_rgba(0,0,0,0.8)]">
         <div className="flex items-center gap-6">
-          <div className="h-16 w-16 bg-castle-gold rounded-sm border-4 border-castle-wood flex items-center justify-center text-castle-wood text-3xl shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] animate-float">
+          <div className="h-16 w-16 bg-castle-gold rounded-b-full rounded-t-2xl border-4 border-castle-wood flex items-center justify-center text-castle-wood text-3xl shadow-[inset_0_0_15px_rgba(0,0,0,0.5),_0_8px_20px_rgba(0,0,0,0.4)] animate-float">
             🏰
           </div>
           <div>
@@ -288,7 +288,7 @@ function App() {
               <div className="stone-card p-12 flex-1 flex flex-col justify-between border-t-4 border-t-castle-gold relative overflow-hidden">
                 {feedback?.success && (
                   <div className="absolute inset-0 bg-stone-950/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
-                    <div className="h-28 w-28 bg-castle-gold rounded-full flex items-center justify-center text-castle-wood text-5xl mb-6 shadow-2xl border-4 border-castle-wood animate-float">⚔️</div>
+                    <div className="h-28 w-28 bg-castle-gold rounded-b-full rounded-t-3xl flex items-center justify-center text-castle-wood text-5xl mb-6 shadow-[inset_0_0_20px_rgba(0,0,0,0.5),_0_15px_30px_rgba(0,0,0,0.6)] border-4 border-castle-wood animate-float">⚔️</div>
                     <h3 className="text-4xl font-medieval text-castle-gold uppercase font-black tracking-widest mb-2 gold-glow">¡Victoria Real!</h3>
                     <p className="text-white font-serif italic text-lg mb-4">Has completado el reto con honor.</p>
                     <p className="text-castle-gold font-medieval text-xl font-bold tracking-widest animate-pulse">+{activeQuest.xp} Honor Ganado</p>

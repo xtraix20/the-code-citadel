@@ -36,7 +36,7 @@ body {
 }
 
 .map-location {
-  transition: all 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   filter: sepia(1) saturate(0.5);
 }
 
@@ -67,7 +67,7 @@ body {
   border: 2px solid #333;
   border-top: 4px solid #444;
   box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .stone-card:hover {
@@ -88,13 +88,13 @@ body {
 
 /* Animations */
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 /* Achievement Badge */
