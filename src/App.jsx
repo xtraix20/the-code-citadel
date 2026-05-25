@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { paths } from './data/quests';
 import QuestCard from './components/QuestCard';
 import { validateSolution } from './engines/ValidationEngine';
 import { getLessonForQuest } from './data/learningContent';
 import { bountiesList } from './data/tavernBounties';
 import PixelEmoji from './components/PixelEmoji';
+import { sound } from './utils/sound';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -35,7 +36,6 @@ function App() {
   const [feedback, setFeedback] = useState(null);
   const [showHint, setShowHint] = useState(false);
   const [hintIndex, setHintIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState("concept"); // "concept", "example", "guide"
 
   // ⚔️ Estados de Duelo contra Boss (Retro 8-Bit)
   const [bossHp, setBossHp] = useState(100);
@@ -49,6 +49,25 @@ function App() {
   const [showTavern, setShowTavern] = useState(false);
   const [showBackpack, setShowBackpack] = useState(false);
   const [bountyNotice, setBountyNotice] = useState(null); // Notificación de contrato
+
+  // 🔊 Audio y Flotantes de Combate
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    return localStorage.getItem('citadel_sound') === 'true';
+  });
+  const [floaters, setFloaters] = useState([]);
+
+  useEffect(() => {
+    sound.toggle(soundEnabled);
+    localStorage.setItem('citadel_sound', soundEnabled ? 'true' : 'false');
+  }, [soundEnabled]);
+
+  const addFloater = (text, type, target) => {
+    const id = Date.now() + Math.random();
+    setFloaters(prev => [...prev, { id, text, type, target }]);
+    setTimeout(() => {
+      setFloaters(prev => prev.filter(f => f.id !== id));
+    }, 1200);
+  };
 
   const lesson = activeQuest ? getLessonForQuest(activeQuest) : null;
 
@@ -70,7 +89,6 @@ function App() {
     setFeedback(null);
     setShowHint(false);
     setHintIndex(0);
-    setActiveTab("concept");
     setCombatAnimClass("");
     setCombatFlashClass("");
 
@@ -84,30 +102,28 @@ function App() {
         `Enemigo: ${quest.title}`,
         "¡Forja tu hechizo con sabiduría!",
         "Tus ataques causan 50 DMG.",
-        "Respuestas erróneas te restan 25 HP.",
-        "------------------------------------"
+        `⚔️ Batalla iniciada contra el Boss: ${quest.title}.`,
+        `💖 Héroe HP: ${user.hp}/${user.maxHp} | Boss HP: 100/100.`
       ]);
-      setActiveEffects({ shield: false });
-      // Sanar al jugador si está debilitado
-      if (user.hp <= 0) {
-        setUser(prev => ({ ...prev, hp: 100 }));
-      }
     }
   };
 
   const buyItem = (itemName, cost) => {
+    sound.playClick();
     if (user.gold >= cost) {
+      sound.playCoin();
       setUser(prev => ({
         ...prev,
         gold: prev.gold - cost,
         inventory: [...prev.inventory, itemName]
       }));
     } else {
+      sound.playDamage();
       alert("¡No tienes suficiente oro en tu baúl!");
     }
   };
 
-  const useItem = (itemName) => {
+  const handleUseItem = (itemName) => {
     if (!user.inventory.includes(itemName)) return;
 
     const itemIndex = user.inventory.indexOf(itemName);
@@ -117,6 +133,8 @@ function App() {
     if (itemName === "Poción de Vida") {
       const healAmount = 50;
       const newHp = Math.min(user.maxHp, user.hp + healAmount);
+      sound.playHeal();
+      addFloater("+50 HP", "heal", "hero");
       setUser(prev => ({ ...prev, hp: newHp, inventory: newInventory }));
       if (activeQuest) {
         setBattleLog(prev => [
@@ -126,6 +144,8 @@ function App() {
       }
     } 
     else if (itemName === "Escudo de Compilación") {
+      sound.playHeal();
+      addFloater("+🛡️ ESCUDO", "shield", "hero");
       setActiveEffects(prev => ({ ...prev, shield: true }));
       setUser(prev => ({ ...prev, inventory: newInventory }));
       if (activeQuest) {
@@ -136,6 +156,8 @@ function App() {
       }
     }
     else if (itemName === "Runa de Sabiduría") {
+      sound.playAlchemist();
+      addFloater("📜 SABIDURÍA", "shield", "hero");
       setUser(prev => ({ ...prev, inventory: newInventory }));
       setShowHint(true);
       if (activeQuest) {
@@ -149,7 +171,9 @@ function App() {
   };
 
   const claimBounty = (bountyId) => {
+    sound.playClick();
     if (!user.activeBounties.includes(bountyId)) {
+      sound.playCoin();
       setUser(prev => ({
         ...prev,
         activeBounties: [...prev.activeBounties, bountyId]
@@ -164,8 +188,11 @@ function App() {
     
     if (isBoss) {
       if (result.success) {
+        sound.playVictory();
         const newBossHp = Math.max(0, bossHp - 50);
         setBossHp(newBossHp);
+        
+        addFloater("-50 HP", "damage", "boss");
         
         setCombatAnimClass("animate-pixel-shake");
         setTimeout(() => setCombatAnimClass(""), 400);
@@ -176,6 +203,7 @@ function App() {
         ]);
 
         if (newBossHp <= 0) {
+          sound.playVictory();
           setBattleLog(prev => [
             ...prev,
             `🏆 ¡VICTORIA! El jefe ha sido destruido en píxeles. ¡Recompensa Real otorgada!`
@@ -231,14 +259,19 @@ function App() {
         }
       } else {
         if (activeEffects.shield) {
+          sound.playHeal();
           setActiveEffects(prev => ({ ...prev, shield: false }));
+          addFloater("🛡️ BLOQUEO", "shield", "hero");
           setBattleLog(prev => [
             ...prev,
             `🛡️ ¡BLOQUEO! El Escudo de Compilación absorbió el ataque.`
           ]);
         } else {
+          sound.playDamage();
           const newHp = Math.max(0, user.hp - 25);
           setUser(prev => ({ ...prev, hp: newHp }));
+          
+          addFloater("-25 HP", "damage", "hero");
           
           setCombatFlashClass("animate-damage-flash");
           setTimeout(() => setCombatFlashClass(""), 500);
@@ -249,6 +282,7 @@ function App() {
           ]);
 
           if (newHp <= 0) {
+            sound.playDamage();
             setBattleLog(prev => [
               ...prev,
               `💀 ¡TE HAS DEBILITADO! Caes inconsciente. Pierdes 40 de oro de tu baúl.`
@@ -265,6 +299,8 @@ function App() {
       }
     } else {
       if (result.success) {
+        sound.playVictory();
+        sound.playCoin();
         let goldReward = 20;
         if (activeQuest.difficulty === "Mid") goldReward = 40;
         if (activeQuest.difficulty === "Senior") goldReward = 80;
@@ -276,6 +312,9 @@ function App() {
         if (newLevel === 2) newRank = "Caballero";
         if (newLevel === 3) newRank = "Paladín";
         if (newLevel > 3) newRank = "Arquimago";
+
+        addFloater(`+${activeQuest.xp} XP`, "heal", "hero");
+        addFloater(`+${goldReward} Oro`, "heal", "hero");
 
         let goldBonus = 0;
         let itemsGained = [];
@@ -308,6 +347,8 @@ function App() {
           setActiveQuest(null);
           setFeedback(null);
         }, 3000);
+      } else {
+        sound.playDamage();
       }
     }
   };
@@ -381,13 +422,23 @@ function App() {
           {/* Action RPG Buttons */}
           <div className="flex gap-2 font-retro text-[8px] tracking-wider">
             <button 
-              onClick={() => setShowTavern(true)}
+              onClick={() => { sound.playClick(); setSoundEnabled(prev => !prev); }}
+              className={`border-2 border-pixel border-double px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5 ${
+                soundEnabled 
+                ? 'bg-emerald-950 hover:bg-emerald-900 border-emerald-500 text-emerald-400' 
+                : 'bg-stone-950 hover:bg-stone-900 border-stone-700 text-stone-500'
+              }`}
+            >
+              <span>{soundEnabled ? '🔊 SONIDO: ON' : '🔇 SONIDO: OFF'}</span>
+            </button>
+            <button 
+              onClick={() => { sound.playClick(); setShowTavern(true); }}
               className="bg-red-950 hover:bg-red-900 border-2 border-pixel border-double border-red-500 text-castle-gold px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5"
             >
               <PixelEmoji emoji="🍺" className="w-3.5 h-3.5" /> Taberna
             </button>
             <button 
-              onClick={() => setShowBackpack(prev => !prev)}
+              onClick={() => { sound.playClick(); setShowBackpack(prev => !prev); }}
               className="bg-stone-900 hover:bg-stone-800 border-2 border-pixel border-double border-stone-600 text-white px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5"
             >
               <PixelEmoji emoji="🎒" className="w-3.5 h-3.5" /> Mochila ({user.inventory.length})
@@ -429,10 +480,10 @@ function App() {
             <div className="world-map w-full min-h-[450px] mb-16 relative overflow-hidden flex flex-wrap items-center justify-center gap-16 py-12 px-20">
               <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
               
-              {paths.map((path, index) => (
+              {paths.map((path) => (
                 <button
                   key={path.id}
-                  onClick={() => setActivePath(path)}
+                  onClick={() => { sound.playClick(); setActivePath(path); }}
                   className={`map-location group flex flex-col items-center gap-4 relative z-10 ${activePath.id === path.id ? 'active' : ''}`}
                 >
                   <div className="text-7xl filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500 flex items-center justify-center w-16 h-16">
@@ -557,6 +608,23 @@ function App() {
             {/* PANEL DERECHO: El Yunque del Destino (La Forja / Práctica con ejercicio diferente) */}
             <div className={`flex flex-col gap-8 ${combatAnimClass} ${combatFlashClass ? 'bg-red-500/10' : ''}`}>
               <div className="stone-card p-8 flex-1 flex flex-col justify-between relative overflow-hidden">
+                {/* Floating Combat Text Popups */}
+                {floaters.map(f => (
+                  <div 
+                    key={f.id} 
+                    className={`absolute z-30 font-retro text-[10px] gold-glow animate-float-up ${
+                      f.type === 'damage' ? 'text-red-500 font-black' : f.type === 'shield' ? 'text-cyan-400 font-bold' : 'text-emerald-400 font-bold'
+                    }`}
+                    style={{
+                      top: f.target === 'boss' ? '30%' : f.target === 'hero' ? '50%' : '40%',
+                      left: '50%',
+                      transform: 'translateX(-50%)'
+                    }}
+                  >
+                    {f.text}
+                  </div>
+                ))}
+
                 {feedback?.success && (
                   <div className="absolute inset-0 bg-black/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
                     <div className="h-20 w-20 bg-castle-gold border-4 border-black flex items-center justify-center text-black mb-6 animate-float shadow-md">
@@ -921,7 +989,7 @@ function App() {
                     <span className="text-white font-bold text-[8px]">{item}</span>
                   </div>
                   <button 
-                    onClick={() => useItem(item)}
+                    onClick={() => handleUseItem(item)}
                     className="bg-black border border-castle-gold text-castle-gold hover:bg-castle-gold hover:text-black px-2 py-1 cursor-pointer active:scale-95 font-bold text-[7px]"
                   >
                     [ USAR ]

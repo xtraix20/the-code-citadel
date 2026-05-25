@@ -47,10 +47,8 @@ const lanzarHechizo = () => console.log("¡Fuego!");`,
 3. El operador de flecha se escribe combinando un signo igual y un signo de mayor que: '=>'.`
   },
   js4: {
-    concept: "Unir textos y variables solía requerir toscas concatenaciones con el operador `+`. Los magos de la Ciudadela utilizan las Plantillas de Cadena (Template Literals) delimitadas por acentos graves (backticks \` \`). Para incrustar magia dinámica en el texto, se usa la runa del dólar seguida de llaves: \`\${variable}\`.",
-    example: `// Ejemplo del Maestro:
-const heroe = "Galahad";
-const saludo = \`¡Salve, \${heroe}!\`;`,
+    concept: "Unir textos y variables solía requerir toscas concatenaciones con el operador `+`. Los magos de la Ciudadela utilizan las Plantillas de Cadena (Template Literals) delimitadas por acentos graves (backticks ` `). Para incrustar magia dinámica en el texto, se usa la runa del dólar seguida de llaves: `${variable}`.",
+    example: "// Ejemplo del Maestro:\nconst heroe = \"Galahad\";\nconst saludo = `¡Salve, ${heroe}!`;",
     exampleExplain: `Análisis del Ejemplo del Maestro:
 1. Las plantillas de texto se encierran entre acentos graves (\` \`) en lugar de comillas simples o dobles.
 2. El marcador '\${heroe}' lee dinámicamente el valor de la variable e inyecta "Galahad" en el texto final.`,
@@ -383,10 +381,10 @@ export const getLessonForQuest = (quest) => {
   const hintWord = (quest.hints && quest.hints.length > 0) ? quest.hints[0] : "la sintaxis adecuada";
   
   // Custom lore templates based on categories
-  let concept = "";
-  let example = "";
-  let exampleExplain = "";
-  let guide = "";
+  let concept;
+  let example;
+  let exampleExplain;
+  let guide;
 
   if (category.toLowerCase().includes("pointer") || category.toLowerCase().includes("memory") || category.toLowerCase().includes("puntero")) {
     concept = `Has ingresado a la sección de **Gestión de Memoria y Punteros**. En estas tierras, la precisión física es ley. Un puntero o referencia es una runa que almacena una coordenada exacta en el pergamino físico del hardware del servidor. Modificar el puntero cambia a dónde apuntas, mientras que desreferenciarlo altera el valor que está guardado en esa coordenada real.`;

@@ -1,4 +1,3 @@
-import React from 'react';
 import PixelEmoji from './PixelEmoji';
 
 const QuestCard = ({ quest, onStart, isCompleted }) => {
