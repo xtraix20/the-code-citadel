@@ -19,33 +19,36 @@
 
 :root {
   background-color: var(--color-castle-bg);
-  color: #d1d1d1;
-  font-family: var(--font-serif);
+  color: #eaeaea;
+  font-family: var(--font-pixel), "VT323", monospace;
+  font-size: 18px;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  background-color: #0c0c0e;
+  background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
 }
 
-/* --- WORLD MAP STYLES --- */
+/* --- WORLD MAP STYLES (8-BIT TILE GRID) --- */
 .world-map {
-  background-image: url('https://img.freepik.com/premium-vector/old-paper-texture-parchment-background-retro-style-brown-paper-background_645609-178.jpg');
-  background-size: cover;
-  border: 10px solid #3e2723;
-  box-shadow: inset 0 0 50px rgba(0,0,0,0.5), 0 20px 40px rgba(0,0,0,0.8);
-  border-radius: 4px;
+  background-color: #0d0e12;
+  background-image: radial-gradient(#1f2937 10%, transparent 10%);
+  background-size: 20px 20px;
+  border: 6px double var(--color-castle-gold);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+  border-radius: 0px;
 }
 
 .map-location {
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  filter: sepia(1) saturate(0.5);
+  filter: grayscale(30%) brightness(0.8);
 }
 
 .map-location:hover {
   filter: none;
-  transform: scale(1.1) translateY(-10px);
+  transform: scale(1.15) translateY(-8px);
 }
 
 .map-location.active {
@@ -54,29 +57,32 @@ body {
   box-shadow: 0 0 20px var(--color-castle-gold);
 }
 
+/* --- RETRO GOLD MEDIEVAL SCROLL --- */
 .medieval-scroll {
-  background-color: #f4ecd8;
-  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-  color: #2d2d2d;
-  border: 12px solid #3e2723;
-  border-image: url('https://img.freepik.com/premium-photo/dark-wood-texture-background-surface-with-old-natural-pattern_267448-112.jpg') 30 stretch;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 100px rgba(0,0,0,0.1);
+  background-color: #161514;
+  color: #f4ecd8;
+  border: 6px double var(--color-castle-gold);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9);
   position: relative;
+  font-family: var(--font-pixel), "VT323", monospace;
+  border-radius: 0px;
 }
 
+/* --- NES DIALOGUE STONE CARD --- */
 .stone-card {
-  background: #1e1e1e;
-  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-  border: 2px solid #333;
-  border-top: 4px solid #444;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  background: #000;
+  border: 4px solid #fff;
+  outline: 2px solid #000;
+  outline-offset: -6px;
+  box-shadow: 0 8px 0px rgba(0,0,0,0.9);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 0px;
 }
 
 .stone-card:hover {
   border-color: var(--color-castle-gold);
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 0px rgba(0,0,0,0.95);
 }
 
 .gold-glow {
@@ -84,8 +90,8 @@ body {
 }
 
 .title-medieval {
-  font-family: var(--font-cinzel);
-  letter-spacing: 0.15em;
+  font-family: var(--font-retro);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
@@ -102,9 +108,9 @@ body {
 
 /* Achievement Badge */
 .badge-gold {
-  background: linear-gradient(135deg, #d4af37 0%, #f9f295 45%, #d4af37 50%, #f9f295 55%, #d4af37 100%);
-  border: 2px solid #3e2723;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  background: #d4af37;
+  border: 3px double #000;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.9);
 }
 
 /* Custom Scrollbar */
@@ -113,13 +119,13 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #3e2723;
   border: 3px solid #121212;
-  border-radius: 10px;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-castle-gold); }
 
 @layer base {
   h1, h2, h3, h4 {
-    @apply font-cinzel tracking-wider text-castle-gold uppercase;
+    @apply font-retro tracking-wider text-castle-gold uppercase;
   }
 }
 

@@ -323,21 +323,23 @@ function App() {
 
   if (!user.isRegistered) {
     return (
-      <div className="min-h-screen w-full bg-castle-bg flex items-center justify-center p-8 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')]">
-        <div className="medieval-scroll max-w-lg w-full p-12 text-center shadow-[0_0_100px_rgba(212,175,55,0.1)]">
-          <h1 className="text-4xl font-medieval text-castle-wood mb-4 uppercase tracking-tighter">Libro de Reclutamiento</h1>
-          <p className="text-castle-wood italic mb-8 opacity-70">"Firma con tu nombre para unirte a la Orden de los Programadores y defender el Reino de la Ciudadela."</p>
+      <div className="min-h-screen w-full bg-black flex items-center justify-center p-8 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]">
+        <div className="border-pixel border-pixel-gold max-w-lg w-full p-10 text-center shadow-[0_0_50px_rgba(212,175,55,0.25)]">
+          <h1 className="text-sm font-retro text-castle-gold mb-6 uppercase tracking-tight">LIBRO DE RECLUTAMIENTO</h1>
+          <p className="text-stone-400 font-pixel text-lg leading-relaxed mb-8 opacity-90">
+            "Firma con tu nombre para unirte a la Orden de los Programadores y defender la Ciudadela."
+          </p>
           <form onSubmit={handleRegister} className="flex flex-col gap-6">
             <input 
               name="username"
               type="text" 
-              placeholder="Escribe tu nombre de caballero..." 
-              className="bg-white/40 border-b-4 border-castle-wood p-4 text-2xl font-serif text-castle-wood focus:outline-none placeholder:text-castle-wood/30"
+              placeholder="Nombre de héroe..." 
+              className="bg-stone-900 border-2 border-stone-700 focus:border-castle-gold p-4 text-xl font-pixel text-emerald-400 focus:outline-none placeholder:text-stone-600 rounded-none text-center uppercase tracking-wider"
               required
               autoFocus
             />
-            <button className="bg-castle-wood text-castle-gold py-4 px-8 text-xl font-medieval uppercase tracking-widest hover:bg-black transition-all shadow-xl border-b-4 border-castle-gold active:scale-95">
-              Juramento de Honor
+            <button className="bg-black border-2 border-pixel border-double border-castle-gold text-castle-gold py-4 px-8 text-[10px] font-retro uppercase tracking-widest hover:bg-castle-gold hover:text-black transition-all shadow-lg active:scale-95 cursor-pointer">
+              [ JURAMENTO DE HONOR ]
             </button>
           </form>
         </div>
@@ -346,32 +348,32 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-castle-bg text-stone-300 font-serif selection:bg-castle-gold selection:text-black">
+    <div className="min-h-screen w-full bg-castle-bg text-stone-300 font-pixel selection:bg-castle-gold selection:text-black">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-[#1a1311] border-b-4 border-castle-gold px-8 py-4 flex justify-between items-center shadow-[0_5px_30px_rgba(0,0,0,0.8)]">
+      <header className="fixed top-0 w-full z-50 bg-[#0d0d0e] border-b-4 border-castle-gold px-8 py-4 flex justify-between items-center shadow-[0_4px_0px_rgba(0,0,0,1)]">
         <div className="flex items-center gap-6">
-          <div className="h-16 w-16 bg-castle-gold rounded-b-full rounded-t-2xl border-4 border-castle-wood flex items-center justify-center text-castle-wood text-3xl shadow-[inset_0_0_15px_rgba(0,0,0,0.5),_0_8px_20px_rgba(0,0,0,0.4)] animate-float">
+          <div className="h-14 w-14 bg-castle-gold border-4 border-black flex items-center justify-center text-3xl shadow-sm animate-float">
             🏰
           </div>
           <div>
-            <h1 className="text-2xl font-medieval text-castle-gold gold-glow title-medieval">The Code Citadel</h1>
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
-              <p className="text-[10px] font-mono text-stone-500 uppercase tracking-widest italic">{user.name} | Nivel {user.level}</p>
+            <h1 className="text-xs font-retro text-castle-gold gold-glow leading-normal tracking-tight uppercase">THE CODE CITADEL</h1>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="h-2 w-2 bg-green-500 rounded-none animate-pulse"></span>
+              <p className="text-[10px] font-retro text-stone-400 uppercase tracking-tighter">{user.name} | NIVEL {user.level}</p>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-8">
           {/* RPG HUD Indicators */}
-          <div className="text-left border-l border-r border-stone-850 px-6 flex flex-col gap-1">
+          <div className="text-left border-l-2 border-r-2 border-stone-800 px-6 flex flex-col gap-1.5 font-retro text-[8px]">
             <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono text-stone-500 uppercase">HP:</span>
-              <span className="text-xs font-mono font-bold text-red-500">{user.hp}/{user.maxHp}</span>
+              <span className="text-red-500 uppercase font-bold">HP:</span>
+              <span className="font-bold text-red-400">{user.hp}/{user.maxHp}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono text-stone-500 uppercase">GOLD:</span>
-              <span className="text-xs font-mono font-bold text-yellow-500">🪙 {user.gold}</span>
+              <span className="text-yellow-500 uppercase font-bold">GOLD:</span>
+              <span className="font-bold text-yellow-400">🪙 {user.gold}</span>
             </div>
           </div>
 
@@ -391,27 +393,27 @@ function App() {
             </button>
           </div>
 
-          <div className="text-right border-l border-stone-850 pl-6">
-            <p className="text-[9px] font-mono text-stone-500 uppercase tracking-widest">Rango Real</p>
-            <p className="text-lg font-medieval text-castle-gold uppercase tracking-widest gold-glow leading-none mt-1">{user.rank}</p>
+          <div className="text-right border-l-2 border-stone-800 pl-6 font-retro">
+            <p className="text-[8px] text-stone-500 uppercase tracking-wider">Rango Real</p>
+            <p className="text-[10px] text-castle-gold uppercase tracking-widest gold-glow leading-none mt-1">{user.rank}</p>
           </div>
 
-          <div className="w-48">
-            <div className="flex justify-between text-[9px] font-mono mb-1 text-stone-400">
+          <div className="w-40 font-retro">
+            <div className="flex justify-between text-[8px] mb-1 text-stone-400">
               <span>XP: {user.honor}</span>
               <span>SIG: 500</span>
             </div>
-            <div className="h-3 w-full bg-black/60 rounded-none border border-stone-800 p-0.5 shadow-inner">
+            <div className="h-4 w-full bg-stone-950 border-2 border-black p-0.5 shadow-none">
               <div 
-                className="h-full bg-gradient-to-r from-castle-wood to-castle-gold transition-all duration-1000 ease-in-out" 
+                className="h-full bg-emerald-500 transition-all duration-1000 ease-in-out" 
                 style={{ width: `${(user.honor % 500) / 5}%` }}
               ></div>
             </div>
           </div>
           
-          <div className="flex gap-1 max-w-[120px] overflow-x-auto pb-1 scrollbar-hide">
+          <div className="flex gap-1.5 max-w-[120px] overflow-x-auto pb-1 scrollbar-hide">
             {user.badges.map((b, i) => (
-              <div key={i} title={b} className="h-7 w-7 badge-gold rounded-full flex-shrink-0 flex items-center justify-center text-[10px] text-castle-wood font-black cursor-help">
+              <div key={i} title={b} className="h-7 w-7 bg-castle-gold border-2 border-black flex-shrink-0 flex items-center justify-center text-xs text-black font-black cursor-help shadow-sm">
                 🏆
               </div>
             ))}
@@ -435,7 +437,7 @@ function App() {
                   <div className="text-7xl filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
                     {mapIcons[path.id] || "🏰"}
                   </div>
-                  <div className="bg-[#3e2723]/95 text-castle-gold px-5 py-2 border-2 border-castle-gold text-xs font-medieval uppercase tracking-[0.2em] shadow-2xl">
+                  <div className="bg-black text-castle-gold px-3 py-1.5 border-2 border-castle-gold text-[8px] font-retro uppercase tracking-wider">
                     {path.name}
                   </div>
                   {activePath.id === path.id && (
@@ -444,35 +446,35 @@ function App() {
                 </button>
               ))}
               
-              <div className="absolute bottom-4 right-6 text-[10px] font-medieval text-castle-wood/60 uppercase tracking-[0.5em] italic">Cartographia Regalis v2.0</div>
+              <div className="absolute bottom-4 right-6 text-[8px] font-retro text-stone-600 uppercase tracking-wider">CARTOGRAPHIA REGALIS V2.0</div>
             </div>
 
-            <div className="mb-16 border-l-8 border-castle-gold pl-10 relative">
-              <h2 className="text-6xl font-medieval text-white mb-4 gold-glow tracking-tighter uppercase">{activePath.name}</h2>
-              <p className="text-stone-500 max-w-3xl italic text-xl leading-relaxed">
-                "Relatos antiguos cuentan que en estas tierras {activePath.description.toLowerCase()}"
+            <div className="mb-16 border-l-4 border-castle-gold pl-6 relative">
+              <h2 className="text-lg font-retro text-white mb-4 gold-glow tracking-tight uppercase">{activePath.name}</h2>
+              <p className="text-emerald-400 font-pixel max-w-3xl text-xl leading-normal bg-black/60 p-4 border border-stone-850">
+                &gt; "Relatos antiguos cuentan que en estas tierras {activePath.description.toLowerCase()}"
               </p>
             </div>
 
             {/* Medal Shelf */}
-            <div className="mb-12 p-8 stone-card border-dashed border-castle-gold/30">
-              <h4 className="text-[10px] font-mono text-castle-gold mb-6 uppercase tracking-[0.4em]">Estantería de Medallas de Gimnasio</h4>
+            <div className="mb-12 p-6 stone-card border-2 border-black">
+              <h4 className="text-[8px] font-retro text-castle-gold mb-6 uppercase tracking-wider text-center">ESTANTERÍA DE MEDALLAS DE GIMNASIO</h4>
               <div className="flex gap-8 justify-center">
                 {paths.map(path => (
-                  <div key={path.id} className="flex flex-col items-center gap-2">
-                    <div className={`h-16 w-16 rounded-full border-4 flex items-center justify-center text-2xl transition-all ${
+                  <div key={path.id} className="flex flex-col items-center gap-3">
+                    <div className={`h-14 w-14 border-4 flex items-center justify-center text-2xl transition-all ${
                       user.badges.includes(path.badgeName) 
-                      ? 'badge-gold border-white shadow-[0_0_20px_rgba(212,175,55,0.5)] scale-110' 
-                      : 'bg-black/40 border-stone-800 text-stone-800 grayscale'
+                      ? 'bg-castle-gold border-black scale-105 shadow-[2px_2px_0px_rgba(0,0,0,1)]' 
+                      : 'bg-stone-900 border-stone-800 text-stone-700 grayscale'
                     }`}>
                       {path.badgeName === 'Serpent Badge' ? '🐍' : 
                        path.badgeName === 'Oracle Badge' ? '📜' :
                        path.badgeName === 'Async Badge' ? '⚡' : '🛡️'}
                     </div>
-                    <span className={`text-[9px] font-mono uppercase tracking-widest ${
+                    <span className={`text-[8px] font-retro tracking-tighter ${
                       user.badges.includes(path.badgeName) ? 'text-castle-gold' : 'text-stone-700'
                     }`}>
-                      {path.badgeName}
+                      {path.badgeName.split(' ')[0]}
                     </span>
                   </div>
                 ))}
@@ -497,33 +499,33 @@ function App() {
           <div className="animate-in zoom-in-95 duration-500 grid grid-cols-1 lg:grid-cols-2 gap-10 min-h-[calc(100vh-300px)]">
             {/* PANEL IZQUIERDO: El Manuscrito de Sabiduría (Aprender al estilo Codédex) */}
             <div className="flex flex-col gap-8">
-              <div className="medieval-scroll p-12 flex-1 flex flex-col justify-between shadow-[0_15px_35px_rgba(0,0,0,0.6)]">
+              <div className="medieval-scroll p-8 flex-1 flex flex-col justify-between shadow-none border-4 border-pixel-gold">
                 {/* Cabecera del Pergamino */}
-                <div className="border-b-4 border-castle-wood/10 pb-4 mb-6">
-                  <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-2">📜 Manuscrito de Sabiduría</h4>
-                  <h2 className="text-4xl font-medieval text-castle-wood uppercase font-black italic tracking-tighter leading-none">{activeQuest.title}</h2>
-                  <p className="text-stone-500 text-xs italic mt-2">Crónicas: "{activeQuest.description}"</p>
+                <div className="border-b-4 border-stone-900 pb-4 mb-6">
+                  <h4 className="text-[8px] font-retro text-yellow-500/70 mb-2 uppercase tracking-wider">📜 Manuscrito de Sabiduría</h4>
+                  <h2 className="text-sm font-retro text-castle-gold uppercase leading-normal tracking-tight">{activeQuest.title}</h2>
+                  <p className="text-stone-400 font-pixel text-base italic mt-2">Crónicas: "{activeQuest.description}"</p>
                 </div>
 
                 {/* Explicación continua de la lección */}
-                <div className="flex-1 overflow-y-auto mb-6 pr-2 max-h-[460px] scrollbar-thin scrollbar-thumb-castle-wood">
+                <div className="flex-1 overflow-y-auto mb-6 pr-2 max-h-[460px] scrollbar-thin">
                   <div className="space-y-8">
                     {/* Sección 1: El Concepto */}
                     <div>
-                      <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">El Concepto del Reino</h4>
-                      <p className="text-castle-wood font-serif text-lg leading-relaxed font-medium">
+                      <h4 className="text-[8px] font-retro text-yellow-500/70 mb-3 uppercase tracking-wider">El Concepto del Reino</h4>
+                      <p className="text-stone-300 font-pixel text-lg leading-relaxed">
                         {lesson?.concept}
                       </p>
                     </div>
 
                     {/* Sección 2: El Ejemplo del Maestro */}
-                    <div className="pt-6 border-t border-castle-wood/10">
-                      <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">El Ejemplo del Maestro</h4>
-                      <div className="bg-stone-900 rounded-sm border-2 border-castle-wood/30 p-6 font-mono text-sm text-castle-gold/90 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] overflow-x-auto mb-4">
+                    <div className="pt-6 border-t border-stone-900">
+                      <h4 className="text-[8px] font-retro text-yellow-500/70 mb-3 uppercase tracking-wider">El Ejemplo del Maestro</h4>
+                      <div className="bg-black border border-stone-850 p-4 font-mono text-xs text-emerald-400 overflow-x-auto mb-4 shadow-[inset_0_0_10px_rgba(0,0,0,0.85)]">
                         <pre className="whitespace-pre">{lesson?.example}</pre>
                       </div>
                       {lesson?.exampleExplain && (
-                        <p className="text-castle-wood/80 font-serif text-sm leading-relaxed font-medium whitespace-pre-line italic">
+                        <p className="text-stone-400 font-pixel text-base leading-relaxed whitespace-pre-line italic">
                           {lesson?.exampleExplain}
                         </p>
                       )}
@@ -531,9 +533,9 @@ function App() {
 
                     {/* Sección 3: La Guía del Oráculo */}
                     {lesson?.guide && (
-                      <div className="pt-6 border-t border-castle-wood/10">
-                        <h4 className="text-[10px] font-mono text-castle-wood/60 uppercase tracking-[0.3em] mb-3">La Guía del Oráculo</h4>
-                        <p className="text-castle-wood/90 font-serif text-sm leading-relaxed font-medium whitespace-pre-line bg-[#3e2723]/5 p-5 border-l-4 border-castle-wood rounded-r-sm">
+                      <div className="pt-6 border-t border-stone-900">
+                        <h4 className="text-[8px] font-retro text-yellow-500/70 mb-3 uppercase tracking-wider">La Guía del Oráculo</h4>
+                        <p className="text-stone-300 font-pixel text-base leading-relaxed whitespace-pre-line bg-stone-900/60 p-4 border-l-4 border-castle-gold">
                           {lesson?.guide}
                         </p>
                       </div>
@@ -542,7 +544,7 @@ function App() {
                 </div>
 
                 {/* Pie de lección */}
-                <div className="bg-[#3e2723]/5 p-4 border border-castle-wood/10 rounded-sm italic text-[11px] text-castle-wood/70 text-center font-serif">
+                <div className="bg-stone-900/40 p-3 border border-stone-800 font-pixel text-xs text-stone-400 text-center italic">
                   "Lee el manuscrito en su totalidad para comprender el concepto y forjar la solución en la arena derecha."
                 </div>
               </div>
@@ -550,26 +552,26 @@ function App() {
 
             {/* PANEL DERECHO: El Yunque del Destino (La Forja / Práctica con ejercicio diferente) */}
             <div className={`flex flex-col gap-8 ${combatAnimClass} ${combatFlashClass ? 'bg-red-500/10' : ''}`}>
-              <div className="stone-card p-12 flex-1 flex flex-col justify-between border-t-4 border-t-castle-gold relative overflow-hidden">
+              <div className="stone-card p-8 flex-1 flex flex-col justify-between relative overflow-hidden">
                 {feedback?.success && (
-                  <div className="absolute inset-0 bg-stone-950/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
-                    <div className="h-28 w-28 bg-castle-gold rounded-b-full rounded-t-3xl flex items-center justify-center text-castle-wood text-5xl mb-6 shadow-[inset_0_0_20px_rgba(0,0,0,0.5),_0_15px_30px_rgba(0,0,0,0.6)] border-4 border-castle-wood animate-float">⚔️</div>
-                    <h3 className="text-4xl font-medieval text-castle-gold uppercase font-black tracking-widest mb-2 gold-glow">¡Victoria Real!</h3>
-                    <p className="text-white font-serif italic text-lg mb-4">Has completado el reto con honor.</p>
-                    <p className="text-castle-gold font-medieval text-xl font-bold tracking-widest animate-pulse">+{activeQuest.xp} Honor Ganado</p>
+                  <div className="absolute inset-0 bg-black/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
+                    <div className="h-20 w-20 bg-castle-gold border-4 border-black flex items-center justify-center text-black text-4xl mb-6 animate-float shadow-md">⚔️</div>
+                    <h3 className="text-lg font-retro text-castle-gold uppercase mb-2 gold-glow tracking-tight text-center">¡VICTORIA REAL!</h3>
+                    <p className="text-stone-300 font-pixel italic text-lg mb-4">Has completado el reto con honor.</p>
+                    <p className="text-yellow-400 font-retro text-xs animate-pulse">+{activeQuest.xp} XP GANADOS</p>
                   </div>
                 )}
 
                 <div>
                   {/* Botones superiores de Control */}
-                  <div className="flex justify-between items-center mb-6 border-b border-stone-800 pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className={`h-3 w-3 rotate-45 ${activeQuest.difficulty === 'Junior' ? 'bg-green-700' : 'bg-castle-crimson'}`}></div>
-                      <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest">Forja Real | Dificultad: {activeQuest.difficulty}</span>
+                  <div className="flex justify-between items-center mb-6 border-b border-stone-850 pb-4">
+                    <div className="flex items-center gap-2 font-retro text-[8px]">
+                      <div className={`h-3 w-3 shadow-sm ${activeQuest.difficulty === 'Junior' ? 'bg-green-700' : 'bg-castle-crimson'}`}></div>
+                      <span className="text-stone-500 uppercase tracking-wider">Forja Real | Dificultad: {activeQuest.difficulty}</span>
                     </div>
                     <button 
                       onClick={() => setActiveQuest(null)} 
-                      className="text-[10px] font-medieval text-castle-gold border border-castle-gold/50 px-4 py-2 hover:bg-castle-gold hover:text-black transition-all uppercase tracking-widest font-black"
+                      className="text-[8px] font-retro text-castle-gold border-2 border-pixel border-double border-castle-gold/50 px-3 py-1.5 hover:bg-castle-gold hover:text-black transition-all uppercase tracking-wider cursor-pointer"
                     >
                       [ VOLVER AL MAPA ]
                     </button>
@@ -605,8 +607,8 @@ function App() {
                           ></div>
                         </div>
                         {activeEffects.shield && (
-                          <div className="mt-2 text-cyan-400 font-mono text-[8px]">
-                            🛡️ Escudo de Compilación Activo
+                          <div className="mt-2 text-cyan-400 font-retro text-[7px]">
+                            🛡️ ESCUDO DE COMPILACIÓN ACTIVO
                           </div>
                         )}
                       </div>
@@ -621,48 +623,48 @@ function App() {
                   )}
 
                   {/* El Mandato del Oráculo */}
-                  <div className="mb-6 bg-black/40 p-6 border-l-4 border-castle-gold rounded-r-md">
-                    <h4 className="text-[9px] font-mono text-castle-gold/60 uppercase tracking-[0.3em] mb-2">El Reto del Oráculo (Diferente al ejemplo)</h4>
-                    <div className="text-stone-300 font-serif italic text-lg leading-normal font-medium">"{lesson?.exerciseExplain}"</div>
+                  <div className="mb-6 bg-black/40 p-4 border-l-4 border-castle-gold">
+                    <h4 className="text-[8px] font-retro text-castle-gold/60 uppercase tracking-wider mb-2">El Reto del Oráculo</h4>
+                    <div className="text-stone-300 font-pixel text-lg leading-normal">"{lesson?.exerciseExplain}"</div>
                   </div>
 
                   {/* El Enigma / Editor de Código */}
                   <div className="flex flex-col min-h-[220px]">
-                    <h4 className="text-[9px] font-mono text-stone-500 mb-2 uppercase tracking-[0.3em]">El Enigma</h4>
-                    <div className="flex-1 bg-black rounded-sm border-2 border-stone-800 p-6 font-mono text-base overflow-auto text-emerald-405/95 shadow-[inset_0_0_20px_rgba(0,0,0,0.9)]">
+                    <h4 className="text-[8px] font-retro text-stone-500 mb-2 uppercase tracking-wider">El Enigma</h4>
+                    <div className="flex-1 bg-black border border-stone-850 p-4 font-mono text-xs overflow-auto text-emerald-400 shadow-[inset_0_0_15px_rgba(0,0,0,0.95)]">
                       <pre className="whitespace-pre-wrap">{activeQuest.problem}</pre>
                     </div>
                   </div>
                 </div>
 
                 {/* Entrada y Verificación */}
-                <div className="mt-8 flex flex-col gap-4">
+                <div className="mt-8 flex flex-col gap-4 font-retro">
                   <div className="flex gap-4">
                     <input 
                       type="text" 
                       value={userInput}
                       onChange={(e) => setUserInput(e.target.value)}
-                      placeholder="Escribe tu solución aquí..." 
-                      className="flex-1 bg-stone-900 border border-stone-700 focus:border-castle-gold text-stone-100 px-6 py-4 text-lg font-mono focus:outline-none transition-all placeholder:text-stone-600 rounded-sm"
+                      placeholder="Solución..." 
+                      className="flex-1 bg-stone-900 border-2 border-stone-700 focus:border-castle-gold text-stone-150 px-4 py-3 text-xs font-mono focus:outline-none transition-all placeholder:text-stone-600 rounded-none uppercase tracking-wider"
                     />
                     <button 
                       onClick={handleValidate}
-                      className="px-10 py-4 bg-castle-gold hover:bg-yellow-600 text-black font-medieval uppercase text-base tracking-widest font-black transition-all shadow-xl active:scale-95 border-b-4 border-yellow-700"
+                      className="px-6 py-3 bg-black border-2 border-pixel border-double border-castle-gold hover:bg-castle-gold hover:text-black text-castle-gold uppercase text-[10px] tracking-wider transition-all shadow-md active:translate-y-1 cursor-pointer"
                     >
-                      Verificar
+                      VERIFICAR
                     </button>
                   </div>
                   
                   {feedback && !feedback.success && (
-                    <div className="text-sm font-serif text-castle-crimson bg-castle-crimson/5 p-4 border border-castle-crimson/30 italic text-center animate-shake rounded-sm">
+                    <div className="text-xs font-pixel text-red-500 bg-red-950/40 p-3 border border-red-900/50 italic text-center rounded-none animate-shake">
                        "El Oráculo: {feedback.message}"
                     </div>
                   )}
 
                   {/* Sección de Pistas de Sabiduría */}
-                  <div className="mt-4 border-t border-stone-800 pt-4">
+                  <div className="mt-4 border-t border-stone-850 pt-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-[9px] font-mono text-stone-500 uppercase tracking-widest">¿Atascado en la forja?</span>
+                      <span className="text-[8px] text-stone-500 uppercase tracking-wider">¿Atascado en la forja?</span>
                       {!showHint ? (
                         <button 
                           onClick={() => {
@@ -679,18 +681,18 @@ function App() {
                               setShowHint(true);
                             }
                           }}
-                          className="text-[9px] font-medieval text-castle-gold hover:underline uppercase tracking-widest"
+                          className="text-[8px] text-castle-gold hover:underline uppercase tracking-wider cursor-pointer bg-transparent border-none"
                         >
                           [ PEDIR PISTA AL ORÁCULO ]
                         </button>
                       ) : (
-                        <span className="text-[9px] font-mono text-castle-gold uppercase tracking-widest">Sabiduría revelada</span>
+                        <span className="text-[8px] text-castle-gold uppercase tracking-wider">Sabiduría revelada</span>
                       )}
                     </div>
                     {showHint && (
                       <div className="mt-3 space-y-2">
                         {activeQuest.hints.slice(0, hintIndex + 1).map((hint, i) => (
-                          <div key={i} className="text-xs text-castle-gold p-3 bg-stone-900/60 border border-castle-gold/20 italic rounded-sm animate-in slide-in-from-right-4">
+                          <div key={i} className="text-xs font-pixel text-castle-gold p-3 bg-stone-900 border border-castle-gold/20 italic rounded-none animate-in slide-in-from-right-4">
                             💎 Pista: {hint}
                           </div>
                         ))}
@@ -709,7 +711,7 @@ function App() {
                                 setHintIndex(prev => prev + 1);
                               }
                             }} 
-                            className="mt-2 text-[9px] font-mono text-stone-400 hover:text-white uppercase tracking-wider underline block"
+                            className="mt-2 text-[8px] text-stone-400 hover:text-white uppercase tracking-wider underline block cursor-pointer bg-transparent border-none"
                           >
                             Pedir siguiente pista
                           </button>
@@ -727,35 +729,35 @@ function App() {
       {/* === 🍺 MODAL DE LA TABERNA RETRO === */}
       {showTavern && (
         <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-8 animate-in fade-in duration-300">
-          <div className="border-pixel max-w-4xl w-full p-8 font-retro bg-black flex flex-col gap-6 shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+          <div className="border-pixel border-pixel-gold max-w-4xl w-full p-8 font-retro bg-black flex flex-col gap-6 shadow-[0_0_50px_rgba(212,175,55,0.2)]">
             {/* Header */}
             <div className="flex justify-between items-center border-b-4 border-double border-stone-850 pb-4">
-              <h2 className="text-sm text-castle-gold">🍺 LA TABERNA REAL DE GOPHER</h2>
+              <h2 className="text-[10px] text-castle-gold">🍺 LA TABERNA REAL DE GOPHER</h2>
               <button 
                 onClick={() => setShowTavern(false)}
-                className="text-red-500 hover:text-red-400 cursor-pointer text-[9px]"
+                className="text-red-500 hover:text-white border border-red-500 bg-transparent hover:bg-red-500 px-3 py-1 cursor-pointer text-[8px] uppercase transition-all"
               >
-                [ X CERRAR ]
+                [ CERRAR ]
               </button>
             </div>
 
             {/* Grid 2 Columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[10px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[9px]">
               {/* Column 1: Daily Contracts */}
               <div className="border-r border-stone-850 pr-6 flex flex-col gap-4">
-                <h3 className="text-white text-[10px] tracking-wider border-b border-stone-850 pb-2">📜 TABLÓN DE CONTRATOS</h3>
+                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2">📜 TABLÓN DE CONTRATOS</h3>
                 <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin">
                   {bountiesList.map(bounty => {
                     const isActive = user.activeBounties.includes(bounty.id);
                     const isCompleted = user.completedBounties.includes(bounty.id);
                     return (
-                      <div key={bounty.id} className="border border-stone-850 p-4 bg-stone-950 flex flex-col gap-2">
+                      <div key={bounty.id} className="border-2 border-stone-800 p-3 bg-stone-950 flex flex-col gap-2">
                         <div className="flex justify-between items-start">
-                          <span className="text-castle-gold font-bold">{bounty.title}</span>
-                          <span className="text-[8px] font-mono text-stone-500">{bounty.targetCategory}</span>
+                          <span className="text-castle-gold font-bold text-[8px]">{bounty.title}</span>
+                          <span className="text-[7px] text-stone-500">{bounty.targetCategory}</span>
                         </div>
-                        <p className="text-stone-400 leading-normal text-[9px]">"{bounty.description}"</p>
-                        <div className="text-[8px] text-yellow-500 font-mono">
+                        <p className="text-stone-400 leading-normal font-pixel text-base">"{bounty.description}"</p>
+                        <div className="text-[8px] text-yellow-500">
                           Recompensa: 🪙 {bounty.goldReward} Oro {bounty.itemReward ? `+ 🎒 ${bounty.itemReward}` : ""}
                         </div>
                         <div className="mt-2 text-right">
@@ -766,7 +768,7 @@ function App() {
                           ) : (
                             <button 
                               onClick={() => claimBounty(bounty.id)}
-                              className="bg-castle-gold text-black px-3 py-1 font-bold rounded-sm text-[8px] hover:bg-yellow-600 cursor-pointer active:scale-95"
+                              className="bg-black border border-castle-gold text-castle-gold hover:bg-castle-gold hover:text-black px-3 py-1.5 font-bold text-[7px] cursor-pointer active:scale-95"
                             >
                               ACEPTAR CONTRATO
                             </button>
@@ -780,26 +782,26 @@ function App() {
 
               {/* Column 2: Apothecary Shop */}
               <div className="flex flex-col gap-4">
-                <h3 className="text-white text-[10px] tracking-wider border-b border-stone-850 pb-2">🧪 LA BOTICA DE LA ALQUIMISTA</h3>
-                <div className="flex items-center gap-4 bg-stone-950 p-4 border border-stone-850 rounded-sm mb-4">
+                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2">🧪 LA BOTICA DE LA ALQUIMISTA</h3>
+                <div className="flex items-center gap-4 bg-stone-950 p-3 border-2 border-stone-800 rounded-none mb-4">
                   <span className="text-2xl">🧙‍♀️</span>
-                  <p className="text-stone-400 leading-relaxed text-[8px]">
+                  <p className="text-stone-400 leading-relaxed font-pixel text-base">
                     "¡Saludos, héroe! Gasta tus monedas de oro aquí para prepararte antes de combatir a los Jefes de Gimnasio."
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   {/* Item 1 */}
-                  <div className="flex justify-between items-center border border-stone-850 p-3 bg-stone-950">
+                  <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
                     <div>
-                      <span className="text-castle-gold font-bold">🧪 Poción de Vida</span>
-                      <p className="text-stone-500 text-[7px] mt-1">Cura 50 HP en combate</p>
+                      <span className="text-castle-gold font-bold text-[8px]">🧪 Poción de Vida</span>
+                      <p className="text-stone-550 font-pixel text-xs mt-1">Cura 50 HP en combate</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 font-mono text-[8px]">🪙 50</span>
+                      <span className="text-yellow-500 text-[8px]">🪙 50</span>
                       <button 
                         onClick={() => buyItem("Poción de Vida", 50)}
-                        className="bg-green-700 text-white px-2 py-1 text-[8px] hover:bg-green-600 cursor-pointer active:scale-95 font-bold"
+                        className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
                       >
                         [ COMPRAR ]
                       </button>
@@ -807,16 +809,16 @@ function App() {
                   </div>
 
                   {/* Item 2 */}
-                  <div className="flex justify-between items-center border border-stone-850 p-3 bg-stone-950">
+                  <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
                     <div>
-                      <span className="text-castle-gold font-bold">🛡️ Escudo de Compilación</span>
-                      <p className="text-stone-500 text-[7px] mt-1">Bloquea golpe del Boss</p>
+                      <span className="text-castle-gold font-bold text-[8px]">🛡️ Escudo de Compilación</span>
+                      <p className="text-stone-550 font-pixel text-xs mt-1">Bloquea golpe del Boss</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 font-mono text-[8px]">🪙 75</span>
+                      <span className="text-yellow-500 text-[8px]">🪙 75</span>
                       <button 
                         onClick={() => buyItem("Escudo de Compilación", 75)}
-                        className="bg-green-700 text-white px-2 py-1 text-[8px] hover:bg-green-600 cursor-pointer active:scale-95 font-bold"
+                        className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
                       >
                         [ COMPRAR ]
                       </button>
@@ -824,16 +826,16 @@ function App() {
                   </div>
 
                   {/* Item 3 */}
-                  <div className="flex justify-between items-center border border-stone-850 p-3 bg-stone-950">
+                  <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
                     <div>
-                      <span className="text-castle-gold font-bold">📜 Runa de Sabiduría</span>
-                      <p className="text-stone-500 text-[7px] mt-1">Pista gratis en combate</p>
+                      <span className="text-castle-gold font-bold text-[8px]">📜 Runa de Sabiduría</span>
+                      <p className="text-stone-550 font-pixel text-xs mt-1">Pista gratis en combate</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 font-mono text-[8px]">🪙 60</span>
+                      <span className="text-yellow-500 text-[8px]">🪙 60</span>
                       <button 
                         onClick={() => buyItem("Runa de Sabiduría", 60)}
-                        className="bg-green-700 text-white px-2 py-1 text-[8px] hover:bg-green-600 cursor-pointer active:scale-95 font-bold"
+                        className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
                       >
                         [ COMPRAR ]
                       </button>
@@ -841,7 +843,7 @@ function App() {
                   </div>
                 </div>
 
-                <div className="mt-auto pt-4 border-t border-stone-850 text-right text-[9px] text-stone-500">
+                <div className="mt-auto pt-4 border-t border-stone-850 text-right text-[8px] text-stone-500">
                   Tu Baúl: <span className="text-yellow-500">🪙 {user.gold} Oro</span>
                 </div>
               </div>
@@ -859,13 +861,13 @@ function App() {
           ) : (
             <div className="space-y-3">
               {user.inventory.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center border border-stone-850 p-2 bg-stone-950">
+                <div key={idx} className="flex justify-between items-center border-2 border-stone-800 p-2 bg-stone-950">
                   <div>
-                    <span className="text-white font-bold">{item === 'Poción de Vida' ? '🧪' : item === 'Escudo de Compilación' ? '🛡️' : '📜'} {item}</span>
+                    <span className="text-white font-bold text-[8px]">{item === 'Poción de Vida' ? '🧪' : item === 'Escudo de Compilación' ? '🛡️' : '📜'} {item}</span>
                   </div>
                   <button 
                     onClick={() => useItem(item)}
-                    className="bg-castle-wood text-castle-gold border border-castle-gold/30 px-2 py-1 hover:bg-castle-gold hover:text-black cursor-pointer active:scale-95 font-bold text-[8px]"
+                    className="bg-black border border-castle-gold text-castle-gold hover:bg-castle-gold hover:text-black px-2 py-1 cursor-pointer active:scale-95 font-bold text-[7px]"
                   >
                     [ USAR ]
                   </button>
