@@ -18,6 +18,7 @@ function App() {
       inventory: ["Poción de Vida"],
       activeBounties: [],
       completedBounties: [],
+      completedQuests: [],
       level: 1,
       badges: [],
       isRegistered: false
@@ -208,6 +209,8 @@ function App() {
             }
           });
 
+          const completedQuestsCopy = [...(user.completedQuests || []), activeQuest.id];
+
           setUser(prev => ({
             ...prev,
             honor: newHonor,
@@ -216,7 +219,8 @@ function App() {
             level: newLevel,
             rank: newRank,
             badges: newBadges,
-            completedBounties: completedBountiesCopy
+            completedBounties: completedBountiesCopy,
+            completedQuests: completedQuestsCopy
           }));
 
           setTimeout(() => {
@@ -286,6 +290,8 @@ function App() {
           }
         });
 
+        const completedQuestsCopy = [...(user.completedQuests || []), activeQuest.id];
+
         setUser(prev => ({
           ...prev,
           honor: newHonor,
@@ -293,8 +299,8 @@ function App() {
           inventory: [...prev.inventory, ...itemsGained],
           level: newLevel,
           rank: newRank,
-          badges: newBadges,
-          completedBounties: completedBountiesCopy
+          completedBounties: completedBountiesCopy,
+          completedQuests: completedQuestsCopy
         }));
 
         setTimeout(() => {
@@ -474,9 +480,17 @@ function App() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {activePath.quests.map(q => (
-                <QuestCard key={q.id} quest={q} onStart={startQuest} />
-              ))}
+              {activePath.quests.map(q => {
+                const isCompleted = user.completedQuests?.includes(q.id);
+                return (
+                  <QuestCard 
+                    key={q.id} 
+                    quest={q} 
+                    onStart={startQuest} 
+                    isCompleted={isCompleted} 
+                  />
+                );
+              })}
             </div>
           </div>
         ) : (
