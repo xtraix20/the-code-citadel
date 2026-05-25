@@ -177,8 +177,11 @@ const emojiMap = {
 };
 
 const PixelEmoji = ({ emoji, className = 'w-5 h-5' }) => {
-  const normalized = emoji ? emoji.trim() : '';
-  const rendered = emojiMap[normalized];
+  const rawTrimmed = emoji ? emoji.trim() : '';
+  // Strip out variation selectors (U+FE00 - U+FE0F) for robust cross-platform matching
+  const normalized = rawTrimmed.replace(/[\uFE00-\uFE0F]/g, '');
+  
+  const rendered = emojiMap[normalized] || emojiMap[rawTrimmed];
   
   if (rendered) {
     return (
