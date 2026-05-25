@@ -1,4 +1,5 @@
 import React from 'react';
+import PixelEmoji from './PixelEmoji';
 
 const QuestCard = ({ quest, onStart, isCompleted }) => {
   const isBoss = quest.category === "GYM LEADER" || quest.id.includes("boss") || quest.id === "j20";
@@ -9,12 +10,22 @@ const QuestCard = ({ quest, onStart, isCompleted }) => {
     }`}>
       {/* Decorative Corner / Defeated Stamp */}
       {isCompleted ? (
-        <div className="absolute -top-1 -right-1 bg-red-950 border-2 border-double border-red-500 font-retro text-[8px] text-red-500 px-3 py-2 rotate-12 z-20 shadow-md">
-          {isBoss ? "⚔️ DERROTADO" : "🏆 SUPERADO"}
+        <div className="absolute -top-1 -right-1 bg-red-950 border-2 border-double border-red-500 font-retro text-[8px] text-red-500 px-3 py-2 rotate-12 z-20 shadow-md flex items-center gap-1">
+          {isBoss ? (
+            <>
+              <PixelEmoji emoji="⚔️" />
+              <span>DERROTADO</span>
+            </>
+          ) : (
+            <>
+              <PixelEmoji emoji="🏆" />
+              <span>SUPERADO</span>
+            </>
+          )}
         </div>
       ) : (
         <div className="absolute top-0 right-0 w-8 h-8 bg-castle-gold border-b-2 border-l-2 border-black flex items-center justify-center font-retro text-[8px] text-black">
-          {isBoss ? "☠️" : "⚔️"}
+          {isBoss ? <PixelEmoji emoji="☠️" /> : <PixelEmoji emoji="⚔️" />}
         </div>
       )}
       
@@ -51,9 +62,10 @@ const QuestCard = ({ quest, onStart, isCompleted }) => {
       {isCompleted ? (
         <button 
           disabled
-          className="mt-4 w-full py-3 bg-stone-900 border-2 border-stone-800 text-stone-600 font-retro text-[10px] uppercase tracking-wider cursor-not-allowed relative z-10 font-bold"
+          className="mt-4 w-full py-3 bg-stone-900 border-2 border-stone-800 text-stone-600 font-retro text-[10px] uppercase tracking-wider cursor-not-allowed relative z-10 font-bold flex items-center justify-center gap-2"
         >
-          {isBoss ? "Derrotado ⚔️" : "Superado 🏆"}
+          <span>{isBoss ? "Derrotado" : "Superado"}</span>
+          {isBoss ? <PixelEmoji emoji="⚔️" /> : <PixelEmoji emoji="🏆" />}
         </button>
       ) : (
         <button 

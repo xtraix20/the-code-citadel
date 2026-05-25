@@ -4,6 +4,7 @@ import QuestCard from './components/QuestCard';
 import { validateSolution } from './engines/ValidationEngine';
 import { getLessonForQuest } from './data/learningContent';
 import { bountiesList } from './data/tavernBounties';
+import PixelEmoji from './components/PixelEmoji';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -352,8 +353,8 @@ function App() {
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-[#0d0d0e] border-b-4 border-castle-gold px-8 py-4 flex justify-between items-center shadow-[0_4px_0px_rgba(0,0,0,1)]">
         <div className="flex items-center gap-6">
-          <div className="h-14 w-14 bg-castle-gold border-4 border-black flex items-center justify-center text-3xl shadow-sm animate-float">
-            🏰
+          <div className="h-14 w-14 bg-castle-gold border-4 border-black flex items-center justify-center shadow-sm animate-float">
+            <PixelEmoji emoji="🏰" className="w-8 h-8" />
           </div>
           <div>
             <h1 className="text-xs font-retro text-castle-gold gold-glow leading-normal tracking-tight uppercase">THE CODE CITADEL</h1>
@@ -373,7 +374,7 @@ function App() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-yellow-500 uppercase font-bold">GOLD:</span>
-              <span className="font-bold text-yellow-400">🪙 {user.gold}</span>
+              <span className="font-bold text-yellow-400 flex items-center gap-1"><PixelEmoji emoji="🪙" className="w-3 h-3" /> {user.gold}</span>
             </div>
           </div>
 
@@ -381,15 +382,15 @@ function App() {
           <div className="flex gap-2 font-retro text-[8px] tracking-wider">
             <button 
               onClick={() => setShowTavern(true)}
-              className="bg-red-950 hover:bg-red-900 border-2 border-pixel border-double border-red-500 text-castle-gold px-3 py-2 cursor-pointer shadow-md active:scale-95"
+              className="bg-red-950 hover:bg-red-900 border-2 border-pixel border-double border-red-500 text-castle-gold px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5"
             >
-              🍺 Taberna
+              <PixelEmoji emoji="🍺" className="w-3.5 h-3.5" /> Taberna
             </button>
             <button 
               onClick={() => setShowBackpack(prev => !prev)}
-              className="bg-stone-900 hover:bg-stone-800 border-2 border-pixel border-double border-stone-600 text-white px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1"
+              className="bg-stone-900 hover:bg-stone-800 border-2 border-pixel border-double border-stone-600 text-white px-3 py-2 cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5"
             >
-              🎒 Mochila ({user.inventory.length})
+              <PixelEmoji emoji="🎒" className="w-3.5 h-3.5" /> Mochila ({user.inventory.length})
             </button>
           </div>
 
@@ -414,7 +415,7 @@ function App() {
           <div className="flex gap-1.5 max-w-[120px] overflow-x-auto pb-1 scrollbar-hide">
             {user.badges.map((b, i) => (
               <div key={i} title={b} className="h-7 w-7 bg-castle-gold border-2 border-black flex-shrink-0 flex items-center justify-center text-xs text-black font-black cursor-help shadow-sm">
-                🏆
+                <PixelEmoji emoji="🏆" className="w-4 h-4" />
               </div>
             ))}
           </div>
@@ -434,8 +435,8 @@ function App() {
                   onClick={() => setActivePath(path)}
                   className={`map-location group flex flex-col items-center gap-4 relative z-10 ${activePath.id === path.id ? 'active' : ''}`}
                 >
-                  <div className="text-7xl filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
-                    {mapIcons[path.id] || "🏰"}
+                  <div className="text-7xl filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500 flex items-center justify-center w-16 h-16">
+                    <PixelEmoji emoji={mapIcons[path.id] || "🏰"} className="w-full h-full" />
                   </div>
                   <div className="bg-black text-castle-gold px-3 py-1.5 border-2 border-castle-gold text-[8px] font-retro uppercase tracking-wider">
                     {path.name}
@@ -467,9 +468,9 @@ function App() {
                       ? 'bg-castle-gold border-black scale-105 shadow-[2px_2px_0px_rgba(0,0,0,1)]' 
                       : 'bg-stone-900 border-stone-800 text-stone-700 grayscale'
                     }`}>
-                      {path.badgeName === 'Serpent Badge' ? '🐍' : 
-                       path.badgeName === 'Oracle Badge' ? '📜' :
-                       path.badgeName === 'Async Badge' ? '⚡' : '🛡️'}
+                      {path.badgeName === 'Serpent Badge' ? <PixelEmoji emoji="🐍" className="w-8 h-8" /> : 
+                       path.badgeName === 'Oracle Badge' ? <PixelEmoji emoji="📜" className="w-8 h-8" /> :
+                       path.badgeName === 'Async Badge' ? <PixelEmoji emoji="⚡" className="w-8 h-8" /> : <PixelEmoji emoji="🛡️" className="w-8 h-8" />}
                     </div>
                     <span className={`text-[8px] font-retro tracking-tighter ${
                       user.badges.includes(path.badgeName) ? 'text-castle-gold' : 'text-stone-700'
@@ -502,7 +503,10 @@ function App() {
               <div className="medieval-scroll p-8 flex-1 flex flex-col justify-between shadow-none border-4 border-pixel-gold">
                 {/* Cabecera del Pergamino */}
                 <div className="border-b-4 border-stone-900 pb-4 mb-6">
-                  <h4 className="text-[8px] font-retro text-yellow-500/70 mb-2 uppercase tracking-wider">📜 Manuscrito de Sabiduría</h4>
+                  <h4 className="text-[8px] font-retro text-yellow-500/70 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                    <PixelEmoji emoji="📜" className="w-3.5 h-3.5" />
+                    <span>Manuscrito de Sabiduría</span>
+                  </h4>
                   <h2 className="text-sm font-retro text-castle-gold uppercase leading-normal tracking-tight">{activeQuest.title}</h2>
                   <p className="text-stone-400 font-pixel text-base italic mt-2">Crónicas: "{activeQuest.description}"</p>
                 </div>
@@ -555,7 +559,9 @@ function App() {
               <div className="stone-card p-8 flex-1 flex flex-col justify-between relative overflow-hidden">
                 {feedback?.success && (
                   <div className="absolute inset-0 bg-black/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center animate-in fade-in duration-500">
-                    <div className="h-20 w-20 bg-castle-gold border-4 border-black flex items-center justify-center text-black text-4xl mb-6 animate-float shadow-md">⚔️</div>
+                    <div className="h-20 w-20 bg-castle-gold border-4 border-black flex items-center justify-center text-black mb-6 animate-float shadow-md">
+                      <PixelEmoji emoji="⚔️" className="w-12 h-12" />
+                    </div>
                     <h3 className="text-lg font-retro text-castle-gold uppercase mb-2 gold-glow tracking-tight text-center">¡VICTORIA REAL!</h3>
                     <p className="text-stone-300 font-pixel italic text-lg mb-4">Has completado el reto con honor.</p>
                     <p className="text-yellow-400 font-retro text-xs animate-pulse">+{activeQuest.xp} XP GANADOS</p>
@@ -607,8 +613,9 @@ function App() {
                           ></div>
                         </div>
                         {activeEffects.shield && (
-                          <div className="mt-2 text-cyan-400 font-retro text-[7px]">
-                            🛡️ ESCUDO DE COMPILACIÓN ACTIVO
+                          <div className="mt-2 text-cyan-400 font-retro text-[7px] flex items-center gap-1">
+                            <PixelEmoji emoji="🛡️" className="w-3 h-3" />
+                            <span>ESCUDO DE COMPILACIÓN ACTIVO</span>
                           </div>
                         )}
                       </div>
@@ -692,8 +699,9 @@ function App() {
                     {showHint && (
                       <div className="mt-3 space-y-2">
                         {activeQuest.hints.slice(0, hintIndex + 1).map((hint, i) => (
-                          <div key={i} className="text-xs font-pixel text-castle-gold p-3 bg-stone-900 border border-castle-gold/20 italic rounded-none animate-in slide-in-from-right-4">
-                            💎 Pista: {hint}
+                          <div key={i} className="text-xs font-pixel text-castle-gold p-3 bg-stone-900 border border-castle-gold/20 italic rounded-none animate-in slide-in-from-right-4 flex items-center gap-1.5">
+                            <PixelEmoji emoji="💎" className="w-3 h-3" />
+                            <span>Pista: {hint}</span>
                           </div>
                         ))}
                         {hintIndex < activeQuest.hints.length - 1 && (
@@ -732,7 +740,10 @@ function App() {
           <div className="border-pixel border-pixel-gold max-w-4xl w-full p-8 font-retro bg-black flex flex-col gap-6 shadow-[0_0_50px_rgba(212,175,55,0.2)]">
             {/* Header */}
             <div className="flex justify-between items-center border-b-4 border-double border-stone-850 pb-4">
-              <h2 className="text-[10px] text-castle-gold">🍺 LA TABERNA REAL DE GOPHER</h2>
+              <h2 className="text-[10px] text-castle-gold flex items-center gap-1.5">
+                <PixelEmoji emoji="🍺" className="w-3.5 h-3.5" />
+                <span>LA TABERNA REAL DE GOPHER</span>
+              </h2>
               <button 
                 onClick={() => setShowTavern(false)}
                 className="text-red-500 hover:text-white border border-red-500 bg-transparent hover:bg-red-500 px-3 py-1 cursor-pointer text-[8px] uppercase transition-all"
@@ -745,7 +756,10 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[9px]">
               {/* Column 1: Daily Contracts */}
               <div className="border-r border-stone-850 pr-6 flex flex-col gap-4">
-                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2">📜 TABLÓN DE CONTRATOS</h3>
+                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2 flex items-center gap-1.5">
+                  <PixelEmoji emoji="📜" className="w-3.5 h-3.5" />
+                  <span>TABLÓN DE CONTRATOS</span>
+                </h3>
                 <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin">
                   {bountiesList.map(bounty => {
                     const isActive = user.activeBounties.includes(bounty.id);
@@ -757,14 +771,26 @@ function App() {
                           <span className="text-[7px] text-stone-500">{bounty.targetCategory}</span>
                         </div>
                         <p className="text-stone-400 leading-normal font-pixel text-base">"{bounty.description}"</p>
-                        <div className="text-[8px] text-yellow-500">
-                          Recompensa: 🪙 {bounty.goldReward} Oro {bounty.itemReward ? `+ 🎒 ${bounty.itemReward}` : ""}
+                        <div className="text-[8px] text-yellow-500 flex items-center flex-wrap gap-1">
+                          <span>Recompensa:</span>
+                          <span className="inline-flex items-center gap-0.5"><PixelEmoji emoji="🪙" className="w-2.5 h-2.5" /> {bounty.goldReward} Oro</span>
+                          {bounty.itemReward && (
+                            <span className="inline-flex items-center gap-0.5 ml-1">+ <PixelEmoji emoji="🎒" className="w-2.5 h-2.5" /> {bounty.itemReward}</span>
+                          )}
                         </div>
                         <div className="mt-2 text-right">
                           {isCompleted ? (
-                            <span className="text-green-500 font-bold">[ COMPLETADO 🏆 ]</span>
+                            <span className="text-green-500 font-bold flex items-center justify-end gap-1">
+                              <span>[ COMPLETADO</span>
+                              <PixelEmoji emoji="🏆" className="w-3 h-3" />
+                              <span>]</span>
+                            </span>
                           ) : isActive ? (
-                            <span className="text-yellow-500 font-bold">[ EN PROGRESO ⚔️ ]</span>
+                            <span className="text-yellow-500 font-bold flex items-center justify-end gap-1">
+                              <span>[ EN PROGRESO</span>
+                              <PixelEmoji emoji="⚔️" className="w-3 h-3" />
+                              <span>]</span>
+                            </span>
                           ) : (
                             <button 
                               onClick={() => claimBounty(bounty.id)}
@@ -782,9 +808,12 @@ function App() {
 
               {/* Column 2: Apothecary Shop */}
               <div className="flex flex-col gap-4">
-                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2">🧪 LA BOTICA DE LA ALQUIMISTA</h3>
+                <h3 className="text-white text-[8px] tracking-wider border-b border-stone-850 pb-2 flex items-center gap-1.5">
+                  <PixelEmoji emoji="🧪" className="w-3.5 h-3.5" />
+                  <span>LA BOTICA DE LA ALQUIMISTA</span>
+                </h3>
                 <div className="flex items-center gap-4 bg-stone-950 p-3 border-2 border-stone-800 rounded-none mb-4">
-                  <span className="text-2xl">🧙‍♀️</span>
+                  <PixelEmoji emoji="🧙‍♀️" className="w-8 h-8" />
                   <p className="text-stone-400 leading-relaxed font-pixel text-base">
                     "¡Saludos, héroe! Gasta tus monedas de oro aquí para prepararte antes de combatir a los Jefes de Gimnasio."
                   </p>
@@ -793,12 +822,18 @@ function App() {
                 <div className="space-y-3">
                   {/* Item 1 */}
                   <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
-                    <div>
-                      <span className="text-castle-gold font-bold text-[8px]">🧪 Poción de Vida</span>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-castle-gold font-bold text-[8px] flex items-center gap-1.5">
+                        <PixelEmoji emoji="🧪" className="w-3.5 h-3.5" />
+                        <span>Poción de Vida</span>
+                      </span>
                       <p className="text-stone-550 font-pixel text-xs mt-1">Cura 50 HP en combate</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 text-[8px]">🪙 50</span>
+                      <span className="text-yellow-500 text-[8px] flex items-center gap-0.5">
+                        <PixelEmoji emoji="🪙" className="w-3 h-3" />
+                        <span>50</span>
+                      </span>
                       <button 
                         onClick={() => buyItem("Poción de Vida", 50)}
                         className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
@@ -810,12 +845,18 @@ function App() {
 
                   {/* Item 2 */}
                   <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
-                    <div>
-                      <span className="text-castle-gold font-bold text-[8px]">🛡️ Escudo de Compilación</span>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-castle-gold font-bold text-[8px] flex items-center gap-1.5">
+                        <PixelEmoji emoji="🛡️" className="w-3.5 h-3.5" />
+                        <span>Escudo de Compilación</span>
+                      </span>
                       <p className="text-stone-550 font-pixel text-xs mt-1">Bloquea golpe del Boss</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 text-[8px]">🪙 75</span>
+                      <span className="text-yellow-500 text-[8px] flex items-center gap-0.5">
+                        <PixelEmoji emoji="🪙" className="w-3 h-3" />
+                        <span>75</span>
+                      </span>
                       <button 
                         onClick={() => buyItem("Escudo de Compilación", 75)}
                         className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
@@ -827,12 +868,18 @@ function App() {
 
                   {/* Item 3 */}
                   <div className="flex justify-between items-center border-2 border-stone-800 p-3 bg-stone-950">
-                    <div>
-                      <span className="text-castle-gold font-bold text-[8px]">📜 Runa de Sabiduría</span>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-castle-gold font-bold text-[8px] flex items-center gap-1.5">
+                        <PixelEmoji emoji="📜" className="w-3.5 h-3.5" />
+                        <span>Runa de Sabiduría</span>
+                      </span>
                       <p className="text-stone-550 font-pixel text-xs mt-1">Pista gratis en combate</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-yellow-500 text-[8px]">🪙 60</span>
+                      <span className="text-yellow-500 text-[8px] flex items-center gap-0.5">
+                        <PixelEmoji emoji="🪙" className="w-3 h-3" />
+                        <span>60</span>
+                      </span>
                       <button 
                         onClick={() => buyItem("Runa de Sabiduría", 60)}
                         className="bg-black border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 text-[8px] cursor-pointer active:scale-95 font-bold"
@@ -843,8 +890,12 @@ function App() {
                   </div>
                 </div>
 
-                <div className="mt-auto pt-4 border-t border-stone-850 text-right text-[8px] text-stone-500">
-                  Tu Baúl: <span className="text-yellow-500">🪙 {user.gold} Oro</span>
+                <div className="mt-auto pt-4 border-t border-stone-850 text-right text-[8px] text-stone-500 flex items-center justify-end gap-1">
+                  <span>Tu Baúl:</span>
+                  <span className="text-yellow-500 flex items-center gap-0.5">
+                    <PixelEmoji emoji="🪙" className="w-3 h-3" />
+                    <span>{user.gold} Oro</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -855,15 +906,19 @@ function App() {
       {/* === 🎒 MOCHILA RETRO OVERLAY === */}
       {showBackpack && (
         <div className="fixed top-24 right-8 z-[90] w-80 border-pixel p-6 bg-black font-retro text-[9px] shadow-2xl animate-in slide-in-from-top-4 duration-300">
-          <h4 className="text-castle-gold border-b border-stone-850 pb-2 mb-4">🎒 MOCHILA DE AVENTURERO</h4>
+          <h4 className="text-castle-gold border-b border-stone-850 pb-2 mb-4 flex items-center gap-1.5">
+            <PixelEmoji emoji="🎒" className="w-4 h-4" />
+            <span>MOCHILA DE AVENTURERO</span>
+          </h4>
           {user.inventory.length === 0 ? (
             <p className="text-stone-500 italic">"Mochila vacía. Visita la taberna."</p>
           ) : (
             <div className="space-y-3">
               {user.inventory.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center border-2 border-stone-800 p-2 bg-stone-950">
-                  <div>
-                    <span className="text-white font-bold text-[8px]">{item === 'Poción de Vida' ? '🧪' : item === 'Escudo de Compilación' ? '🛡️' : '📜'} {item}</span>
+                  <div className="flex items-center">
+                    <PixelEmoji emoji={item === 'Poción de Vida' ? '🧪' : item === 'Escudo de Compilación' ? '🛡️' : '📜'} className="w-3.5 h-3.5 mr-1.5" />
+                    <span className="text-white font-bold text-[8px]">{item}</span>
                   </div>
                   <button 
                     onClick={() => useItem(item)}
